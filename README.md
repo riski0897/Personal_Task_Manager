@@ -48,7 +48,6 @@ Kontribusi sangat terbuka! Silakan fork repositori ini, buat branch baru, dan aj
 
 ---
 
----
 ## 📄 Lisensi
 
 Proyek ini menggunakan lisensi **MIT**. Silakan lihat file `LICENSE` untuk informasi lebih lanjut.
@@ -69,8 +68,3 @@ Dibuat oleh **Muhammad Rizki Febriansyah**
 - Pastikan menambahkan gambar cuplikan antarmuka (`screenshot.png`) ke dalam repositori untuk mendukung bagian *screenshot*.
 - Jika proyek akan dikembangkan lebih lanjut, kamu juga bisa menambahkan bagian seperti "Roadmap", "Issues", atau "Changelog".
 
-Perlu bantuan menambahkan README ini langsung ke repositorimu? Saya bisa bantu buatkan filenya juga.
-```
-)
-
----
