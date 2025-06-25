@@ -7,18 +7,6 @@
 
 ---
 
-````markdown
-# Personal Task Manager
-
-![GitHub Pages](https://img.shields.io/badge/deployed-GitHub%20Pages-blue?logo=github)
-![License](https://img.shields.io/badge/license-MIT-green)
-
-**Personal Task Manager** adalah aplikasi berbasis web yang dirancang untuk membantu pengguna mengelola tugas pribadi secara lebih efektif dan terorganisir. Aplikasi ini memudahkan pengguna untuk menambahkan, menghapus, dan menandai tugas sebagai selesai.
-
-🔗 **Live Demo**: [riski0897.github.io/Personal_Task_Manager](https://riski0897.github.io/Personal_Task_Manager/)
-
----
-
 ## ✨ Fitur Utama
 
 - ✅ Menambahkan tugas baru
