@@ -43,7 +43,7 @@
 
    ```bash
    cd Personal_Task_Manager
-   ```
+   ````
 3. Buka file `index.html` di browser.
 
 ---
