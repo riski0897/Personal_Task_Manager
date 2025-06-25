@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Task Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .main-app {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .task-input-section {
+            margin-bottom: 40px;
+        }
+
+        .task-input-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .task-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .task-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .add-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .add-btn:active {
+            transform: translateY(0);
+        }
+
+        .task-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .tasks-section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .task-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .task-item {
+            background: white;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .task-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-item.completed {
+            opacity: 0.7;
+            border-left-color: #27ae60;
+            background: #f8f9fa;
+        }
+
+        .task-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .task-checkbox.completed {
+            background: #27ae60;
+            border-color: #27ae60;
+        }
+
+        .task-checkbox.completed::after {
+            content: "✓";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .task-text {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #95a5a6;
+        }
+
+        .task-time {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-left: auto;
+            margin-right: 15px;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .task-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .task-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .edit-btn {
+            background: #f39c12;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-text {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .empty-subtext {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer p {
+            color: #7f8c8d;
+            margin: 5px 0;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background: #27ae60;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #95a5a6;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .task-input-container {
+                flex-direction: column;
+            }
+
+            .task-stats {
+                flex-direction: column;
+            }
+
+            .task-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .task-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .task-filters {
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+        }
+
+        .task-item.new {
+            animation: slideIn 0.3s ease;
+        }
+
+        .task-item.removing {
+            animation: slideOut 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📋 Personal Task Manager</h1>
+            <p>Kelola tugas harian Anda dengan mudah dan efisien</p>
+        </div>
+
+        <!-- Main Application -->
+        <div class="main-app">
+            <!-- Task Input Section -->
+            <div class="task-input-section">
+                <div class="task-input-container">
+                    <input type="text" class="task-input" id="taskInput" placeholder="Masukkan tugas baru..." />
+                    <button class="add-btn" onclick="addTask()">➕ Tambah</button>
+                </div>
+            </div>
+
+            <!-- Task Statistics -->
+            <div class="task-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalTasks">0</div>
+                    <div class="stat-label">Total Tugas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completedTasks">0</div>
+                    <div class="stat-label">Selesai</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingTasks">0</div>
+                    <div class="stat-label">Belum Selesai</div>
+                </div>
+            </div>
+
+            <!-- Task Filters -->
+            <div class="task-filters">
+                <button class="filter-btn active" onclick="filterTasks('all')">Semua</button>
+                <button class="filter-btn" onclick="filterTasks('pending')">Belum Selesai</button>
+                <button class="filter-btn" onclick="filterTasks('completed')">Selesai</button>
+            </div>
+
+            <!-- Tasks Section -->
+            <div class="tasks-section">
+                <h2 class="section-title">
+                    📝 Daftar Tugas
+                </h2>
+                <ul class="task-list" id="taskList">
+                    <!-- Tasks will be dynamically added here -->
+                </ul>
+                
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">📝</div>
+                    <div class="empty-text">Belum ada tugas</div>
+                    <div class="empty-subtext">Tambahkan tugas pertama Anda di atas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Personal Task Manager</strong></p>
+            <p>Dibuat untuk membantu produktivitas harian Anda</p>
+            <p>© 2024 - AMIK Taruna Probolinggo</p>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>✏️ Edit Tugas</h2>
+            <input type="text" id="editTaskInput" placeholder="Edit tugas..." />
+            <div class="modal-buttons">
+                <button class="modal-btn save-btn" onclick="saveEditTask()">Simpan</button>
+                <button class="modal-btn cancel-btn" onclick="closeEditModal()">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tasks = [];
+        let currentFilter = 'all';
+        let editingTaskId = null;
+
+        // Initialize the app
+        function init() {
+            loadTasks();
+            updateStats();
+            renderTasks();
+            
+            // Add event listener for Enter key
+            document.getElementById('taskInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTask();
+                }
+            });
+
+            // Add event listener for edit modal Enter key
+            document.getElementById('editTaskInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    saveEditTask();
+                }
+            });
+
+            // Close modal when clicking outside
+            document.getElementById('editModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeEditModal();
+                }
+            });
+        }
+
+        // Load tasks from localStorage
+        function loadTasks() {
+            const savedTasks = localStorage.getItem('personalTaskManager');
+            if (savedTasks) {
+                tasks = JSON.parse(savedTasks);
+            }
+        }
+
+        // Save tasks to localStorage
+        function saveTasks() {
+            localStorage.setItem('personalTaskManager', JSON.stringify(tasks));
+        }
+
+        // Add new task
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+            
+            if (taskText === '') {
+                alert('Silakan masukkan tugas!');
+                return;
+            }
+
+            const newTask = {
+                id: Date.now(),
+                text: taskText,
+                completed: false,
+                createdAt: new Date().toLocaleString('id-ID')
+            };
+
+            tasks.unshift(newTask);
+            taskInput.value = '';
+            
+            saveTasks();
+            updateStats();
+            renderTasks();
+            
+            // Show success feedback
+            showNotification('Tugas berhasil ditambahkan!', 'success');
+        }
+
+        // Toggle task completion
+        function toggleTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                updateStats();
+                renderTasks();
+                
+                const message = task.completed ? 'Tugas selesai!' : 'Tugas dibatalkan';
+                showNotification(message, task.completed ? 'success' : 'info');
+            }
+        }
+
+        // Delete task
+        function deleteTask(taskId) {
+            if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
+                const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+                if (taskElement) {
+                    taskElement.classList.add('removing');
+                    
+                    setTimeout(() => {
+                        tasks = tasks.filter(t => t.id !== taskId);
+                        saveTasks();
+                        updateStats();
+                        renderTasks();
+                        showNotification('Tugas berhasil dihapus!', 'error');
+                    }, 300);
+                }
+            }
+        }
+
+        // Edit task
+        function editTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                editingTaskId = taskId;
+                document.getElementById('editTaskInput').value = task.text;
+                document.getElementById('editModal').style.display = 'block';
+                document.getElementById('editTaskInput').focus();
+            }
+        }
+
+        // Save edited task
+        function saveEditTask() {
+            const newText = document.getElementById('editTaskInput').value.trim();
+            
+            if (newText === '') {
+                alert('Silakan masukkan teks tugas!');
+                return;
+            }
+
+            const task = tasks.find(t => t.id === editingTaskId);
+            if (task) {
+                task.text = newText;
+                saveTasks();
+                renderTasks();
+                closeEditModal();
+                showNotification('Tugas berhasil diperbarui!', 'success');
+            }
+        }
+
+        // Close edit modal
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+            editingTaskId = null;
+        }
+
+        // Filter tasks
+        function filterTasks(filter) {
+            currentFilter = filter;
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderTasks();
+        }
+
+        // Render tasks
+        function renderTasks() {
+            const taskList = document.getElementById('taskList');
+            const emptyState = document.getElementById('emptyState');
+            
+            let tasksToShow = tasks;
+            
+            // Apply filter
+            if (currentFilter === 'completed') {
+                tasksToShow = tasks.filter(t => t.completed);
+            } else if (currentFilter === 'pending') {
+                tasksToShow = tasks.filter(t => !t.completed);
+            }
+            
+            // Show/hide empty state
+            if (tasksToShow.length === 0) {
+                emptyState.style.display = 'block';
+                taskList.style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                taskList.style.display = 'block';
+            }
+            
+            // Render tasks
+            taskList.innerHTML = '';
+            tasksToShow.forEach(task => {
+                const taskItem = document.createElement('li');
+                taskItem.className = `task-item ${task.completed ? 'completed' : ''} new`;
+                taskItem.setAttribute('data-task-id', task.id);
+                
+                taskItem.innerHTML = `
+                    <div class="task-content">
+                        <div class="task-checkbox ${task.completed ? 'completed' : ''}" 
+                             onclick="toggleTask(${task.id})"></div>
+                        <div class="task-text">${task.text}</div>
+                    </div>
+                    <div class="task-time">${task.createdAt}</div>
+                    <div class="task-actions">
+                        <button class="task-btn edit-btn" onclick="editTask(${task.id})" 
+                                ${task.completed ? 'disabled' : ''}>
+                            ✏️ Edit
+                        </button>
+                        <button class="task-btn delete-btn" onclick="deleteTask(${task.id})">
+                            🗑️ Hapus
+                        </button>
+                    </div>
+                `;
+                
+                taskList.appendChild(taskItem);
+            });
+        }
+
+        // Update statistics
+        function updateStats() {
+            const total = tasks.length;
+            const completed = tasks.filter(t => t.completed).length;
+            const pending = total - completed;
+            
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('pendingTasks').textContent = pending;
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 10px;
+                color: white;
+                font-weight: bold;
+                z-index: 1001;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: all 0.3s ease;
+                max-width: 300px;
+            `;
+            
+            // Set color based on type
+            switch(type) {
+                case 'success':
+                    notification.style.background = '#27ae60';
+                    break;
+                case 'error':
+                    notification.style.background = '#e74c3c';
+                    break;
+                case 'info':
+                    notification.style.background = '#3498db';
+                    break;
+                default:
+                    notification.style.background = '#95a5a6';
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Hide notification
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
