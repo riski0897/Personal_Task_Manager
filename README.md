@@ -1,6 +1,3 @@
-````markdown
-# Personal Task Manager
-
 ![GitHub Pages](https://img.shields.io/badge/deployed-GitHub%20Pages-blue?logo=github)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -40,7 +37,7 @@
 1. Clone repository ini:
    ```bash
    git clone https://github.com/riski0897/Personal_Task_Manager.git
-````
+```
 
 2. Buka folder proyek:
 
