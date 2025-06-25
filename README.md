@@ -3,7 +3,8 @@
 
 **Personal Task Manager** adalah aplikasi berbasis web yang dirancang untuk membantu pengguna mengelola tugas pribadi secara lebih efektif dan terorganisir. Aplikasi ini memudahkan pengguna untuk menambahkan, menghapus, dan menandai tugas sebagai selesai.
 
-🔗 **Live Demo**: [riski0897.github.io/Personal_Task_Manager](Berikut adalah contoh isi `README.md` yang profesional dan informatif untuk repository GitHub proyek **Personal Task Manager** berdasarkan URL yang kamu berikan:
+🔗 **Live Demo**: [riski0897.github.io/Personal_Task_Manager](https://riski0897.github.io/Personal_Task_Manager/)
+
 
 ---
 
