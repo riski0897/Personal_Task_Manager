@@ -38,18 +38,6 @@
 Kontribusi sangat terbuka! Silakan fork repositori ini, buat branch baru, dan ajukan pull request jika ingin menambahkan fitur atau perbaikan bug.
 
 ---
-
-### Catatan:
-- Kamu bisa mengganti `[your-email@example.com]` dengan email kontak aslimu jika ingin dicantumkan.
-- Pastikan menambahkan gambar cuplikan antarmuka (`screenshot.png`) ke dalam repositori untuk mendukung bagian *screenshot*.
-- Jika proyek akan dikembangkan lebih lanjut, kamu juga bisa menambahkan bagian seperti "Roadmap", "Issues", atau "Changelog".
-
-Perlu bantuan menambahkan README ini langsung ke repositorimu? Saya bisa bantu buatkan filenya juga.
-```
-)
-
----
-
 ## 🚀 Cara Menjalankan Proyek Ini Secara Lokal
 
 1. Clone repository ini:
@@ -59,17 +47,6 @@ Perlu bantuan menambahkan README ini langsung ke repositorimu? Saya bisa bantu b
 3. Buka file `index.html` di browser.
 
 ---
-
-## 📁 Struktur Folder
-
-```
-Personal_Task_Manager/
-├── index.html
-├── style.css
-├── script.js
-├── screenshot.png
-└── README.md
-```
 
 ---
 ## 📄 Lisensi
@@ -84,5 +61,16 @@ Dibuat oleh **Muhammad Rizki Febriansyah**
 📧 Email: \[[your-email@example.com](mailto:your-email@example.com)]
 🌐 Website: [https://riski0897.github.io/](https://riski0897.github.io/)
 
+
+---
+
+### Catatan:
+- Kamu bisa mengganti `[your-email@example.com]` dengan email kontak aslimu jika ingin dicantumkan.
+- Pastikan menambahkan gambar cuplikan antarmuka (`screenshot.png`) ke dalam repositori untuk mendukung bagian *screenshot*.
+- Jika proyek akan dikembangkan lebih lanjut, kamu juga bisa menambahkan bagian seperti "Roadmap", "Issues", atau "Changelog".
+
+Perlu bantuan menambahkan README ini langsung ke repositorimu? Saya bisa bantu buatkan filenya juga.
+```
+)
 
 ---
